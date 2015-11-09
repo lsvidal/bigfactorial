@@ -6,7 +6,7 @@ struct num {
     struct num *n;
 };
 
-struct num *num(char v, struct num *n) {
+struct num *get(char v, struct num *n) {
     struct num *r = malloc(sizeof(struct num));
     r->v = v;
     r->n = n;
@@ -24,9 +24,9 @@ void kill(struct num *a) {
 int main()
 {
     int N = 500, i;
-    struct num *a = num(1, NULL);
+    struct num *a = get(1, NULL);
     for (i = 2 ; i <= N ; i++) {
-        struct num *ai = a, *p = num(0, NULL), *pi = p, *pc;
+        struct num *ai = a, *p = get(0, NULL), *pi = p, *pc;
         while (ai) {
             int c = ai->v * i;
             pc = pi;
@@ -34,11 +34,11 @@ int main()
                 c += pc->v;
                 pc->v = c % 10;
                 c /= 10;
-                if (!pc->n) pc->n = num(0, NULL);
+                if (!pc->n) pc->n = get(0, NULL);
                 pc = pc->n;
             }
             ai = ai->n;
-            if (!pi->n) pi->n = num(0, NULL); // This is necessary to handle situations where 'c' starts as zero
+            if (!pi->n) pi->n = get(0, NULL); // This is necessary to handle situations where 'c' starts as zero
             pi = pi->n;
         }
         kill(a);
@@ -48,7 +48,7 @@ int main()
     // Inverts the order of the digits
     struct num *ai = a, *r = NULL;
     while (ai) {
-        r = num(ai->v, r);
+        r = get(ai->v, r);
         ai = ai->n;
     }
     kill(a);
