@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct num {
     char v;
@@ -67,6 +68,14 @@ int main()
         printf("%d", r->v);
         r = r->n;
     }
+    printf("\n");
     kill(r);
+
+    clock_t start, stop;
+    start = clock();
+    int i;
+    for (i = 0 ; i < 100 ; i++) fact(500);
+    stop = clock();
+    printf("Took an average of %0.7f seconds\n", (double)(stop - start)/CLOCKS_PER_SEC/100);
     return 0;
 }
