@@ -146,7 +146,8 @@ int main()
         kill(r);
     }
     stop = clock();
-    printf("Took an average of %0.7f seconds\n", (double)(stop - start)/CLOCKS_PER_SEC/REPS);
+    double mean = (double)(stop - start)/CLOCKS_PER_SEC/REPS;
+    printf("Took an average of %0.7f seconds for malloc/free version\n", mean);
 
     start = clock();
     for (i = 0 ; i < REPS ; i++) {
@@ -155,6 +156,8 @@ int main()
     }
     kill(cache);
     stop = clock();
-    printf("Took an average of %0.7f seconds\n", (double)(stop - start)/CLOCKS_PER_SEC/REPS);
+    double meanCache = (double)(stop - start)/CLOCKS_PER_SEC/REPS;
+    printf("Took an average of %0.7f seconds for cache version\n", meanCache);
+    printf("Reduction of %0.2f%%\n", (1-meanCache/mean)*100);
     return 0;
 }
