@@ -1,31 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct num {
+typedef struct num {
     char v;
     struct num *n;
-};
+} num;
 
-struct num *get(char v, struct num *n) {
-    struct num *r = malloc(sizeof(struct num));
+num *get(char v, num *n) {
+    num *r = malloc(sizeof(num));
     r->v = v;
     r->n = n;
     return r;
 }
 
-void kill(struct num *a) {
+void kill(num *a) {
     while (a) {
-        struct num *b = a->n;
+        num *b = a->n;
         free(a);
         a = b;
     }
 }
 
-struct num *fact(int N) {
+num *fact(int N) {
     int i;
-    struct num *a = get(1, NULL);
+    num *a = get(1, NULL);
     for (i = 2 ; i <= N ; i++) {
-        struct num *ai = a, *p = get(0, NULL), *pi = p, *pc;
+        num *ai = a, *p = get(0, NULL), *pi = p, *pc;
         while (ai) {
             int c = ai->v * i;
             pc = pi;
@@ -45,14 +45,14 @@ struct num *fact(int N) {
     }
 
     // Inverts the order of the digits
-    struct num *ai = a, *r = NULL;
+    num *ai = a, *r = NULL;
     while (ai) {
         r = get(ai->v, r);
         ai = ai->n;
     }
     kill(a);
 
-    struct num *ri = r;
+    num *ri = r;
     // Remove leading zeroes
     while (ri && ri->v == 0) ri = ri->n;
 
@@ -61,7 +61,7 @@ struct num *fact(int N) {
 
 int main()
 {
-    struct num *r = fact(500);
+    num *r = fact(500);
 
     while (r) {
         printf("%d", r->v);
