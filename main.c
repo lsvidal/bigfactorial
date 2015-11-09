@@ -7,7 +7,7 @@ typedef struct num {
     struct num *n;
 } num;
 
-num *get(char v, num *n) {
+num *alloc(char v, num *n) {
     num *r = malloc(sizeof(num));
     r->v = v;
     r->n = n;
@@ -24,9 +24,9 @@ void kill(num *a) {
 
 num *fact(int N) {
     int i;
-    num *a = get(1, NULL);
+    num *a = alloc(1, NULL);
     for (i = 2 ; i <= N ; i++) {
-        num *ai = a, *p = get(0, NULL), *pi = p, *pc;
+        num *ai = a, *p = alloc(0, NULL), *pi = p, *pc;
         while (ai) {
             int c = ai->v * i;
             pc = pi;
@@ -34,11 +34,11 @@ num *fact(int N) {
                 c += pc->v;
                 pc->v = c % 10;
                 c /= 10;
-                if (!pc->n) pc->n = get(0, NULL);
+                if (!pc->n) pc->n = alloc(0, NULL);
                 pc = pc->n;
             }
             ai = ai->n;
-            if (!pi->n) pi->n = get(0, NULL); // This is necessary to handle situations where 'c' starts as zero
+            if (!pi->n) pi->n = alloc(0, NULL); // This is necessary to handle situations where 'c' starts as zero
             pi = pi->n;
         }
         kill(a);
@@ -48,7 +48,7 @@ num *fact(int N) {
     // Inverts the order of the digits
     num *ai = a, *r = NULL;
     while (ai) {
-        r = get(ai->v, r);
+        r = alloc(ai->v, r);
         ai = ai->n;
     }
     kill(a);
