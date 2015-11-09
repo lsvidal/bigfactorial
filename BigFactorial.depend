@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1447086605 source:e:\usr\burn\workspace\c\bigfactorial\main.c
+	<stdio.h>
+	<stdlib.h>
+
