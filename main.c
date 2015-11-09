@@ -21,9 +21,8 @@ void kill(struct num *a) {
     }
 }
 
-int main()
-{
-    int N = 500, i;
+struct num *fact(int N) {
+    int i;
     struct num *a = get(1, NULL);
     for (i = 2 ; i <= N ; i++) {
         struct num *ai = a, *p = get(0, NULL), *pi = p, *pc;
@@ -56,12 +55,18 @@ int main()
     struct num *ri = r;
     // Remove leading zeroes
     while (ri && ri->v == 0) ri = ri->n;
-    // Print each digit
-    while (ri) {
-        printf("%d", ri->v);
-        ri = ri->n;
+
+    return ri;
+}
+
+int main()
+{
+    struct num *r = fact(500);
+
+    while (r) {
+        printf("%d", r->v);
+        r = r->n;
     }
     kill(r);
-
     return 0;
 }
