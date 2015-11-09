@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+const int REPS = 100;
+
 typedef struct num {
     char v;
     struct num *n;
@@ -124,8 +126,11 @@ num *fact_cache(int N) {
 
 int main()
 {
-    num *r = fact(500);
+    int N = 1000;
 
+    num *r = fact(N);
+
+    printf("The factorial of %d is ", N);
     while (r) {
         printf("%d", r->v);
         r = r->n;
@@ -136,20 +141,20 @@ int main()
     clock_t start, stop;
     start = clock();
     int i;
-    for (i = 0 ; i < 100 ; i++) {
-        r = fact(500);
+    for (i = 0 ; i < REPS ; i++) {
+        r = fact(N);
         kill(r);
     }
     stop = clock();
-    printf("Took an average of %0.7f seconds\n", (double)(stop - start)/CLOCKS_PER_SEC/100);
+    printf("Took an average of %0.7f seconds\n", (double)(stop - start)/CLOCKS_PER_SEC/REPS);
 
     start = clock();
-    for (i = 0 ; i < 100 ; i++) {
-        r = fact_cache(500);
+    for (i = 0 ; i < REPS ; i++) {
+        r = fact_cache(N);
         put(r);
     }
     kill(cache);
     stop = clock();
-    printf("Took an average of %0.7f seconds\n", (double)(stop - start)/CLOCKS_PER_SEC/100);
+    printf("Took an average of %0.7f seconds\n", (double)(stop - start)/CLOCKS_PER_SEC/REPS);
     return 0;
 }
